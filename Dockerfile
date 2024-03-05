@@ -1,16 +1,43 @@
-# Use uma imagem docker como base
-FROM itdevgroup/php-fpm8.2
 
-# Instale todos os programas para personalizar a máquina virtual
-RUN apt update
-RUN apt install -y php8.2-stomp \
-    php8.2-mongodb \
-    php8.2-rdkafka \
-    php8.2-redis \
-    php8.2-amqp
+FROM php:8.2.17RC2-fpm-bullseye
 
-# Set working directory
-WORKDIR /var/www
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# Exponha a porta da aplicação
-EXPOSE 9000
+RUN install-php-extensions \
+    mysqli \
+    mysqlnd \
+    openssl \
+    pcntl \
+    pcre \
+    PDO \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    Phar \
+    posix \
+    random \
+    rdkafka \
+    readline \
+    redis \
+    Reflection \
+    session \
+    shmop \
+    SimpleXML \
+    sockets \
+    sodium \
+    SPL \
+    standard \
+    Stomp \
+    sysvmsg \
+    sysvsem \
+    sysvshm \
+    tokenizer \
+    xdebug \
+    xml \
+    xmlreader \
+    xmlrpc \
+    xmlwriter \
+    xsl \
+    zip \
+    zlib \
+    Xdebug \

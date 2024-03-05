@@ -1,42 +1,42 @@
 version: '3.1'
 services:
-    nginx:
+    ambiente_nginx:
         image: nginx:alpine
         working_dir: /var/www/
         ports:
             - "8000:80"
         volumes:
-            - ./html:/var/www
+            - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         depends_on:
-            - db
-    db:
-        container_name: db
+            - ambiente_db
+    ambiente_db:
+        container_name: ambiente_db
         image: mariadb:10.3.39-focal
         volumes:
             - ./data:/var/lib/mysql/
         environment:
             MYSQL_ROOT_PASSWORD: Devanon1
-            MYSQL_DATABASE: drupal
+            MYSQL_DATABASE: database
             MYSQL_USER: fabricio
             MYSQL_PASSWORD: Devanon1
         ports:
             - "2000:3306"
-    phpmyadmin:
+    ambiente_phpmyadmin:
         image: phpmyadmin/phpmyadmin
         environment:
-            PMA_HOST: db
+            PMA_HOST: ambiente_db
         depends_on:
-            - db
+            - ambiente_db
         ports:
             - "1000:80"
-    app:
+    ambiente_php:
         build:
             context: .
             dockerfile: Dockerfile
         working_dir: /var/www/
         volumes:
-            - ./html:/var/www
+            - ./:/var/www
 
 
 
